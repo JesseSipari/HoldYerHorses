@@ -1,3 +1,4 @@
+import sys
 import numpy as np
 import random
 
@@ -39,6 +40,18 @@ class LearningBot:
 
     def decay_exploration_rate(self):
         self.exploration_rate *= self.exploration_decay
+
+    def decide_action(self, cards):
+        # Implement decision logic based on detected cards
+        # For simplicity, we'll use a placeholder state representation based on cards
+        state = self._cards_to_state(cards)
+        action = self.get_best_action(state)
+        print(f"Decided action based on cards: {cards} -> action: {action}")
+        return action
+
+    def _cards_to_state(self, cards):
+        # Convert detected cards to a string representation (or any other suitable state representation)
+        return str(cards)
 
 # Function to receive user feedback and update the model
 def receive_feedback(bot, state, action, reward, next_state):

@@ -1,63 +1,63 @@
-import os
 import sys
+import os
+import codecs
 import cv2
 import numpy as np
-import pyautogui
 import tensorflow as tf
-import matplotlib.pyplot as plt
+from tensorflow.keras.models import load_model
 
-# Set default encoding to UTF-8
-os.environ["PYTHONIOENCODING"] = "utf-8"
-sys.stdout.reconfigure(encoding='utf-8')
-sys.stderr.reconfigure(encoding='utf-8')
+# Change the default encoding to 'utf-8'
+sys.stdout = codecs.getwriter('utf-8')(sys.stdout.buffer)
 
-# Screen capture function
-def capture_screen(region=None):
-    screenshot = pyautogui.screenshot(region=region)
-    frame = np.array(screenshot)
-    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    return frame
+# Load your trained model
+model = tf.keras.models.load_model('card_recognition_model.keras')
 
-# Load pre-trained card recognition model
-try:
-    model = tf.keras.models.load_model('model_1.h5')
-    model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
-except Exception as e:
-    print(f"Error loading model: {e}")
+def preprocess_frame(frame):
+    # Resize the frame to match the model's expected input shape
+    resized_frame = cv2.resize(frame, (224, 224))
+    # Normalize the frame (assuming the model expects normalized input)
+    normalized_frame = resized_frame / 255.0
+    return normalized_frame
 
-# Function to process the image and detect cards
 def detect_cards(frame):
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    _, thresh = cv2.threshold(gray, 127, 255, cv2.THRESH_BINARY_INV)
-    contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    # This is a simplified example for detecting multiple cards.
+    # In a real application, you would likely use a more complex method
+    # to identify and segment each card from the frame.
 
-    cards = []
-    for contour in contours:
-        x, y, w, h = cv2.boundingRect(contour)
-        if w < 20 or h < 20:  # Ignore very small detections
-            continue
-        card = frame[y:y+h, x:x+w]
-        card = cv2.resize(card, (224, 224))  # Resize to match model input size
-        card = np.expand_dims(card, axis=0) / 255.0  # Normalize
-        prediction = model.predict(card)
-        predicted_class = np.argmax(prediction, axis=1)[0]  # Get the predicted class
-        cards.append((x, y, w, h, predicted_class))
+    # For now, assume we are looking for up to 4 cards in fixed locations.
+    card_locations = [
+        (50, 50, 150, 200),  # (top-left-x, top-left-y, width, height)
+        (200, 50, 150, 200),
+        (350, 50, 150, 200),
+        (500, 50, 150, 200)
+    ]
 
-        # Draw rectangle around the detected card
+    detected_cards = []
+    for (x, y, w, h) in card_locations:
+        card_image = frame[y:y+h, x:x+w]
+        processed_frame = preprocess_frame(card_image)
+        processed_frame = np.expand_dims(processed_frame, axis=0)
+
+        predictions = model.predict(processed_frame)
+        
+        suits_prediction = predictions[0]
+        ranks_prediction = predictions[1]
+        
+        predicted_suit = np.argmax(suits_prediction, axis=1)[0]
+        predicted_rank = np.argmax(ranks_prediction, axis=1)[0]
+        
+        card = map_class_to_card(predicted_suit, predicted_rank)
+        detected_cards.append(card)
+
+        # Draw bounding box and label on the frame
         cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
-    
-    return cards, frame
+        label = f"{card}"
+        cv2.putText(frame, label, (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
 
-# Example usage
-if __name__ == "__main__":
-    region = (0, 0, 800, 600)  # Define the region of the screen to capture
-    frame = capture_screen(region)
-    cards, processed_frame = detect_cards(frame)
-    for (x, y, w, h, predicted_class) in cards:
-        print(f"Detected card at ({x}, {y}, {w}, {h}) with predicted class: {predicted_class}")
+    return detected_cards, frame
+
+def map_class_to_card(predicted_suit, predicted_rank):
+    SUITS = ['clubs', 'diamonds', 'hearts', 'spades', 'joker']
+    RANKS = ['two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'jack', 'queen', 'king', 'ace', 'joker']
     
-    # Display the frame with detected cards outlined using Matplotlib
-    plt.imshow(processed_frame)
-    plt.title('Detected Cards')
-    plt.axis('off')
-    plt.show()
+    return f"{RANKS[predicted_rank]} of {SUITS[predicted_suit]}"
