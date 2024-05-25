@@ -172,7 +172,7 @@ class App:
         self.current_image_file = None
         self.current_image = None
         self.predicted_label = None
-        self.previous_image_file = None  # To keep track of the previous image
+        self.previous_images = []  # Stack to keep track of previous images
         self.images_to_update = []
         self.suits_to_update = []
         self.ranks_to_update = []
@@ -198,14 +198,16 @@ class App:
                 return
             image_file = self.image_files.pop()
 
-        self.previous_image_file = self.current_image_file
+        if self.current_image_file is not None:
+            self.previous_images.append((self.current_image_file, self.current_image, self.predicted_label))
+
         self.current_image_file = image_file
         self.current_image = load_image(self.current_image_file)
         predictions = model.predict(self.current_image)
         predicted_suit = SUITS[np.argmax(predictions[0])]
         predicted_rank = RANKS[np.argmax(predictions[1])]
 
-        # Ensure correct handling of Joker
+                # Ensure correct handling of Joker
         if predicted_suit == 'joker':
             predicted_label = 'joker'
         else:
@@ -225,7 +227,7 @@ class App:
     def yes_feedback(self):
         print(f"Confirmed: {self.predicted_label}")
         self.load_next_image()
-    
+
     def no_feedback(self):
         correct_label = os.path.basename(os.path.dirname(self.current_image_file)).replace('_', ' ')
         correct_suit, correct_rank = get_suit_and_rank(correct_label)
@@ -243,12 +245,16 @@ class App:
         self.root.quit()
         self.root.destroy()  # Ensure the Tkinter instance is properly destroyed
 
-
     def back_feedback(self):
-        if self.previous_image_file:
-            self.load_next_image(self.previous_image_file)
-            self.previous_image_file = None  # Clear the previous image after going back
-            print("Went back to previous image.")
+        if self.previous_images:
+            self.current_image_file, self.current_image, self.predicted_label = self.previous_images.pop()
+            img = Image.open(self.current_image_file)
+            img = img.resize((224, 224), Image.LANCZOS)
+            img = ImageTk.PhotoImage(img)
+            self.image_label.config(image=img)
+            self.image_label.image = img
+            self.label.config(text=f'Prediction: {self.predicted_label}')
+            print(f"Went back to previous image: {self.current_image_file}")
         else:
             messagebox.showinfo("Info", "No previous image to go back to.")
 

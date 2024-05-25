@@ -83,16 +83,28 @@ def custom_data_generator(file_paths, labels, batch_size, img_size):
     dataset = dataset.repeat()  # Ensure the dataset repeats to avoid running out of data
     return dataset
 
-# Prepare the data
-datagen = ImageDataGenerator(rescale=1./255, validation_split=0.2)
+# Prepare the data with data augmentation
+datagen = ImageDataGenerator(
+    rescale=1./255,
+    rotation_range=20,
+    width_shift_range=0.2,
+    height_shift_range=0.2,
+    shear_range=0.2,
+    zoom_range=0.2,
+    horizontal_flip=True,
+    fill_mode='nearest',
+    validation_split=0.2  # Use a portion of the data for validation
+)
+
 train_generator = datagen.flow_from_directory(
     'poker-card-image-recognition/dataset/training',  # Update with your dataset path
     target_size=(224, 224),
     batch_size=32,
     class_mode='categorical',
     subset='training',
-    shuffle=False
+    shuffle=True
 )
+
 validation_generator = datagen.flow_from_directory(
     'poker-card-image-recognition/dataset/training',  # Update with your dataset path
     target_size=(224, 224),
@@ -121,7 +133,7 @@ train_dataset = custom_data_generator(train_file_paths, {'suit_output': train_su
 validation_dataset = custom_data_generator(validation_file_paths, {'suit_output': validation_suits, 'rank_output': validation_ranks}, batch_size=32, img_size=(224, 224))
 
 # Training the model
-model.fit(train_dataset, validation_data=validation_dataset, epochs=1, steps_per_epoch=25, validation_steps=50)
+model.fit(train_dataset, validation_data=validation_dataset, epochs=3, steps_per_epoch=40, validation_steps=40)
 model.save('card_recognition_model.keras')  # Save the trained model
 
 def evaluate_model(validation_dir):
@@ -185,3 +197,4 @@ def evaluate_model(validation_dir):
 if __name__ == "__main__":
     validation_dir = 'poker-card-image-recognition/dataset/validation'
     evaluate_model(validation_dir)
+
