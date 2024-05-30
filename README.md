@@ -1,6 +1,6 @@
 
-# Project Title
-AI Card bot!
+# AI Card Bot
+Building AI course project
 
 ## Table of Contents
 
