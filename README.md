@@ -1,83 +1,51 @@
 
-# AI Card Bot
+
+```markdown
+<!-- This is the markdown template for the final project of the Building AI course, 
+created by Reaktor Innovations and University of Helsinki. 
+Copy the template, paste it to your GitHub README and edit! -->
+
+
+# HoldYerHorses
+
 Final project for the Building AI course
 
 ## Summary
 
-This project aims to develop a Texas Hold'em bot that detects cards on the screen and learns through user feedback. The bot uses machine learning models to predict the suit and rank of the cards, and it can be trained interactively to improve its accuracy.
+This project is about training a model to classify playing cards. The model is trained on a dataset of card images and can be further improved through interactive training with user feedback.
 
-Here's how:
+## Background
 
-* Card Detection: Uses TensorFlow and Keras for image recognition. The model predicts both the suit and rank of the cards.
-* Interactive Training: Uses a Tkinter GUI for user feedback. Users can confirm or correct predictions to improve the model.
-* Evaluation: Evaluates the model using validation and test datasets.
-* Data Handling: Custom data generator to handle both suit and rank labels. Class mappings are defined in a CSV file.
+This project solves the problem of classifying playing cards based on images. This could be useful in various card games where automatic card recognition could enhance the gaming experience. My personal motivation is my interest in AI and its applications in gaming.
 
-## Table of Contents
+* Problem 1: Classifying playing cards based on images
+* Problem 2: Improving the model through interactive training
 
-- [Table of Contents](#table-of-contents)
-  - [Built With](#built-with)
-- [Getting Started](#getting-started)
-  - [Installation](#installation)
-- [Usage](#usage)
-  - [Training the Model](#training-the-model)
-  - [Interactive Training](#interactive-training)
-  - [Evaluation](#evaluation)
-- [Acknowledgements](#acknowledgements)
+## How is it used?
 
-
-
-### Built With
-
-* [TensorFlow](https://www.tensorflow.org/)
-* [Keras](https://keras.io/)
-* [Tkinter](https://docs.python.org/3/library/tkinter.html)
-
-## Getting Started
-
-To get a local copy up and running follow these simple steps.
-
-### Installation
-
-1. Clone the repo
-   ```sh
-   git clone https://github.com/JesseSipari/cardbot.git
-   cd cardbot
-   ```
-2. Install the required libraries
-   ```sh
-   pip install tensorflow pandas pillow opencv-python tk
-   ```
-3. Download the dataset
-   - Download the dataset from [Kaggle](https://www.kaggle.com/datasets/gpiosenka/cards-image-datasetclassification/data).
-   - Extract the dataset and place it in the `dataset` directory.
-
-## Usage
-
-### Training the Model
-
-To train the model, run the `train_cards.py` script. This script will train the model on the dataset and save the trained model.
+The model is trained using the [`train_cards.py`](train_cards.py) script. For interactive training with user feedback, the [`interactive_training.py`](interactive_training.py) script is used. The users are developers or AI enthusiasts who want to experiment with image classification and interactive training.
 
 ```sh
 python train_cards.py
-```
-
-### Interactive Training
-
-To perform interactive training with user feedback, run the `interactive_training.py` script. This script will display images and ask for user feedback to improve the model.
-
-```sh
 python interactive_training.py
 ```
 
+## Data sources and AI methods
 
-### Evaluation
+The data for this project comes from the [Cards Image Dataset-Classification](https://www.kaggle.com/datasets/gpiosenka/cards-image-datasetclassification/data) on Kaggle.
 
-To evaluate the model's performance, use the evaluation function provided in the `train_cards.py` or `interactive_training.py` scripts. The evaluation function will print classification reports and confusion matrices for both suit and rank predictions.
+The AI methods used in this project include Convolutional Neural Networks (CNNs) for image classification, and Transfer Learning to leverage pre-trained models for better performance and efficiency.
 
+## Challenges
 
+This project does not solve the problem of recognizing cards in real-world conditions, such as different lighting conditions or angles. Ethical considerations include ensuring that the technology is not used for cheating in card games.
 
-## Acknowledgements
+## What next?
+
+The project could be expanded to recognize other types of cards or to recognize cards in real-world conditions. Another next step is to adapt the model to detect cards from a specific game. Skills in image processing and deep learning would be useful for this.
+
+## Acknowledgments
 
 * [Cards Image Dataset-Classification](https://www.kaggle.com/datasets/gpiosenka/cards-image-datasetclassification/data)
 ```
+
