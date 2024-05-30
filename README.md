@@ -1,4 +1,4 @@
-Card bot
+Card bot!
 
 ## Table of Contents
 
