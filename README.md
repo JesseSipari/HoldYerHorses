@@ -2,19 +2,6 @@
 # AI Card Bot
 Final project for the Building AI course
 
-## Table of Contents
-
-- [Table of Contents](#table-of-contents)
-- [Summary](#Summary)
-  - [Built With](#built-with)
-- [Getting Started](#getting-started)
-  - [Installation](#installation)
-- [Usage](#usage)
-  - [Training the Model](#training-the-model)
-  - [Interactive Training](#interactive-training)
-  - [Evaluation](#evaluation)
-- [Acknowledgements](#acknowledgements)
-
 ## Summary
 
 This project aims to develop a Texas Hold'em bot that detects cards on the screen and learns through user feedback. The bot uses machine learning models to predict the suit and rank of the cards, and it can be trained interactively to improve its accuracy.
@@ -25,6 +12,20 @@ Here's how:
 * Interactive Training: Uses a Tkinter GUI for user feedback. Users can confirm or correct predictions to improve the model.
 * Evaluation: Evaluates the model using validation and test datasets.
 * Data Handling: Custom data generator to handle both suit and rank labels. Class mappings are defined in a CSV file.
+
+## Table of Contents
+
+- [Table of Contents](#table-of-contents)
+  - [Built With](#built-with)
+- [Getting Started](#getting-started)
+  - [Installation](#installation)
+- [Usage](#usage)
+  - [Training the Model](#training-the-model)
+  - [Interactive Training](#interactive-training)
+  - [Evaluation](#evaluation)
+- [Acknowledgements](#acknowledgements)
+
+
 
 ### Built With
 
