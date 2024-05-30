@@ -24,6 +24,8 @@ The model is trained using the [`train_cards.py`](train_cards.py) script. For in
 
 ```sh
 python train_cards.py
+```
+```sh
 python interactive_training.py
 ```
 
