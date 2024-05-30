@@ -1,6 +1,3 @@
-
-
-```markdown
 <!-- This is the markdown template for the final project of the Building AI course, 
 created by Reaktor Innovations and University of Helsinki. 
 Copy the template, paste it to your GitHub README and edit! -->
@@ -47,5 +44,5 @@ The project could be expanded to recognize other types of cards or to recognize 
 ## Acknowledgments
 
 * [Cards Image Dataset-Classification](https://www.kaggle.com/datasets/gpiosenka/cards-image-datasetclassification/data)
-```
+
 
