@@ -1,6 +1,6 @@
 
 # AI Card Bot
-Building AI course project
+Final project for the Building AI course
 
 ## Table of Contents
 
