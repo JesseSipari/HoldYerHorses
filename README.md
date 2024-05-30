@@ -1,9 +1,11 @@
-Card bot!
+
+# Project Title
+AI Card bot!
 
 ## Table of Contents
 
 - [Table of Contents](#table-of-contents)
-- [About The Project](#about-the-project)
+- [Summary](#Summary)
   - [Built With](#built-with)
 - [Getting Started](#getting-started)
   - [Installation](#installation)
@@ -13,7 +15,7 @@ Card bot!
   - [Evaluation](#evaluation)
 - [Acknowledgements](#acknowledgements)
 
-## About The Project
+## Summary
 
 This project aims to develop a Texas Hold'em bot that detects cards on the screen and learns through user feedback. The bot uses machine learning models to predict the suit and rank of the cards, and it can be trained interactively to improve its accuracy.
 
