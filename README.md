@@ -38,8 +38,8 @@ To get a local copy up and running follow these simple steps.
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/yourusername/texas-holdem-card-detection-bot.git
-   cd texas-holdem-card-detection-bot
+   git clone https://github.com/yourusername/cardbot.git
+   cd cardbot
    ```
 2. Install the required libraries
    ```sh
