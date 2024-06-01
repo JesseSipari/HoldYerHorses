@@ -16,7 +16,7 @@ This project solves the problem of classifying playing cards based on images. Th
 
 ## How is it used?
 
-The model is trained using the [`train_cards.py`](train_cards.py) script. For interactive training with user feedback, the [`interactive_training.py`](interactive_training.py) script is used. The users are developers or AI enthusiasts who want to experiment with image classification and interactive training.
+The model is trained using the [`train_cards.py`](train_cards.py) script. For interactive training with user feedback, the [`interactive_training.py`](interactive_training.py) script is used.
 
 ```sh
 python train_cards.py
