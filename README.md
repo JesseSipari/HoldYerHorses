@@ -37,7 +37,7 @@ This project does not solve the problem of recognizing cards in real-world condi
 
 ## What next?
 
-The project could be expanded to recognize other types of cards or to recognize cards in real-world conditions. Another next step is to adapt the model to detect cards from a specific game. Skills in image processing and deep learning would be useful for this.
+The project could be expanded to recognize other types of cards or to recognize cards in real-world conditions. Another next step is to adapt the model to detect cards from a specific game.
 
 ## Acknowledgments
 
